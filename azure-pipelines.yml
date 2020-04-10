@@ -20,12 +20,12 @@ steps:
   displayName: npm install
   inputs:
     command: 'install'
-    workingDir: 'src\pwa-sample-app\'
+    workingDir: 'src/pwa-sample-app/'
 
 - task: CmdLine@2
   displayName: build front-end
   inputs:
-    workingDirectory: 'src\pwa-sample-app\'
+    workingDirectory: 'src/pwa-sample-app/'
     script: |
       set "REACT_APP_VERSION=$(buildRunNumber)" && npm run-script build
 
