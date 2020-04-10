@@ -1,0 +1,37 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name: $(MajorVersion).$(MinorVersion).$(Build.BuildId)
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildRunNumber: '$(MajorVersion).$(MinorVersion).$(Build.BuildId)'
+
+steps:
+
+- task: Npm@1
+  displayName: npm install
+  inputs:
+    command: 'install'
+    workingDir: 'src\pwa-sample\'
+
+- task: CmdLine@2
+  displayName: build front-end
+  inputs:
+    workingDirectory: 'src\pwa-sample\'
+    script: |
+      set "REACT_APP_VERSION=$(buildRunNumber)" && npm run-script build
+
+- task: PublishBuildArtifacts@1
+  displayName: publish artifact
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
