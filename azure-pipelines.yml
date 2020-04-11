@@ -44,5 +44,5 @@ steps:
   displayName: 'Publish Artifact: drop'
   inputs:
     PathtoPublish: src/pwa-sample-app/build/
-    ArtifactName: 'drop'
+    ArtifactName: 'wwwroot'
     publishLocation: 'Container'
