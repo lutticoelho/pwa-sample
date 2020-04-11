@@ -32,7 +32,7 @@ steps:
 - task: ArchiveFiles@1
   displayName: 'Archive files '
   inputs:
-    rootFolder: 'src/build'
+    rootFolder: 'src/pwa-sample-app/build/'
     includeRootFolder: false
 
 - task: CopyFiles@2
