@@ -43,6 +43,6 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   inputs:
-    PathtoPublish: build
+    PathtoPublish: src/pwa-sample-app/build/
     ArtifactName: 'drop'
     publishLocation: 'Container'
