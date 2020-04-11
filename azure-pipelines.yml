@@ -29,6 +29,17 @@ steps:
     script: |
       set "REACT_APP_VERSION=$(buildRunNumber)" && npm run-script build
 
+- task: ArchiveFiles@1
+  displayName: 'Archive files '
+  inputs:
+    rootFolder: 'src/pwa-sample-app'
+    includeRootFolder: false
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
 - task: PublishBuildArtifacts@1
   displayName: publish artifact
   inputs:
