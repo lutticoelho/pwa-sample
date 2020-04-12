@@ -1,5 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
+import GeolocationComponent from './components/Geolocation/geolocation.component';
+
+import logo from './logo.png';
 import './App.css';
 
 function App() {
@@ -8,7 +10,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Welcome to <code>PWA Samples</code>.
         </p>
         <a
           className="App-link"
@@ -19,6 +21,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <GeolocationComponent/>
     </div>
   );
 }
