@@ -1,5 +1,4 @@
 import React from 'react';
-import GeolocationComponent from './components/Geolocation/geolocation.component';
 
 import logo from './logo.png';
 import './App.css';
@@ -21,7 +20,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <GeolocationComponent/>
     </div>
   );
 }

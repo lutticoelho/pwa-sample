@@ -17,7 +17,6 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
             geolocationStatus: '',
             isGeolocationSupported: !!navigator.geolocation
         };
-
         
         this.setPositionIntoState = this.setPositionIntoState.bind(this);
     }
