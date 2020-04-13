@@ -53,7 +53,7 @@ export default class CameraComponent extends Component<{}, CameraState> {
                 <video
                     ref={this.videoRef}
                     onCanPlay={this.handleCanPlay}
-                    style={{ top: 0, left: 0, width: '100vw', height: '100vh' }}
+                    style={{ top: 0, left: 0, width: '100vw' }}
                     autoPlay
                     playsInline
                     muted

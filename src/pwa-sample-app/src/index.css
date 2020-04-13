@@ -14,10 +14,16 @@ code {
 
 .navbar {
   background-color: #333;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: scroll;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 100vw;
+  height: 50px;
+}
+
+.navbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Style the links inside the navigation bar */
@@ -41,4 +47,8 @@ code {
 .navbar a.active {
   background-color: #bc1932;
   color: white;
+}
+
+nav {
+  display: flex;
 }

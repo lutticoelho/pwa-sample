@@ -1,7 +1,15 @@
 import React from 'react';
+import * as Sentry from '@sentry/browser';
 
 import logo from './logo.png';
 import './App.css';
+
+const sentryOptions = {
+  dsn: process.env.REACT_APP_SENTRY_DSN,
+  release: `my-project-name@${process.env.REACT_APP_VERSION}`
+} as Sentry.BrowserOptions;
+
+Sentry.init(sentryOptions);
 
 function App() {
   return (
