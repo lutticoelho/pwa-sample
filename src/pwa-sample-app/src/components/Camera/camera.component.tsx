@@ -12,6 +12,7 @@ type CameraState = {
 export default class CameraComponent extends Component<{}, CameraState> {
 
     private videoRef: React.RefObject<HTMLVideoElement>;
+    private isStreamming: boolean = false;
 
     constructor(props: {}) {
         super(props);
@@ -28,10 +29,27 @@ export default class CameraComponent extends Component<{}, CameraState> {
     }
 
     componentDidMount() {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            // Without `{ audio: true }` since we only want video now
-            navigator.mediaDevices.getUserMedia({ video: true }).then(this.setMediaStreamIntoState);
-        }
+        navigator.permissions.query({ name: 'camera' })
+            .then(function (permissionStatus) {
+                console.log('camera permission state is ', permissionStatus.state);
+                return permissionStatus;
+            })
+            .then(permissionStatus => {
+                this.setState({
+                    ...this.state,
+                    mediaDevicesStatus: permissionStatus.state
+                });
+                permissionStatus.onchange = () => this.onChangePermissionStatus(permissionStatus);
+            });
+    }
+
+    onChangePermissionStatus(permissionStatus: PermissionStatus) {
+        this.setState({
+            ...this.state,
+            mediaDevicesStatus: permissionStatus.state
+        });
+
+        this.startStreasmming();
     }
 
     setMediaStreamIntoState(stream: MediaStream) {
@@ -45,6 +63,14 @@ export default class CameraComponent extends Component<{}, CameraState> {
         });
     }
 
+    startStreasmming() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Without `{ audio: true }` since we only want video now
+            navigator.mediaDevices.getUserMedia({ video: true }).then(this.setMediaStreamIntoState);
+            this.isStreamming = true;
+        }
+    }
+
     handleCanPlay() {
         this.videoRef.current?.play();
     }
@@ -55,17 +81,21 @@ export default class CameraComponent extends Component<{}, CameraState> {
             return (<Message message='Your browser do not support geolocation api.' />)
         }
 
-        if (this.state.mediaDevicesStatus !== 'granted'){
+        if (this.state.mediaDevicesStatus !== 'granted') {
             switch (this.state.mediaDevicesStatus) {
                 case 'denied':
-                    return (<Message message='You have denied access to your camera api.'/>);
+                    return (<Message message='You have denied access to your camera api.' />);
                 case 'prompted':
-                    return (<Message message='Please allow us to access your camera api.'/>);
+                    return (<Message message='Please allow us to access your camera api.' />);
                 default:
-                    return (<Message message='Loading...'/>);
+                    return (<Message message='Loading...' />);
             }
         }
-        
+
+        if(!this.isStreamming) {
+            this.startStreasmming();
+        }
+
         return (
             <div className="full-view-port">
                 <video
