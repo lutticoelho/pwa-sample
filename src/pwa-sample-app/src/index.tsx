@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import * as serviceWorker from './serviceWorker';
 
-import './index.css';
+import './index.scss';
 import App from './App';
 import { Message } from 'components/Message/message.component';
 import { NavigationBar } from 'components/NavigationBar/navigation-bar.component';
