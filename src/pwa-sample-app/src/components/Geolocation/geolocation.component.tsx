@@ -3,7 +3,8 @@ import React, { Component, Fragment } from 'react';
 type GeolocationState = {
     position: Position,
     geolocationStatus: string,
-    isGeolocationSupported: boolean
+    isGeolocationSupported: boolean,
+    embedMapUrl: string,
 };
 
 export default class GeolocationComponent extends Component<{}, GeolocationState> {
@@ -15,7 +16,8 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
         this.state = {
             position: { coords: { latitude: 0, longitude: 0, accuracy: 0, altitude: 0, altitudeAccuracy: 0, heading: 0, speed: 0 }, timestamp: 0 },
             geolocationStatus: '',
-            isGeolocationSupported: !!navigator.geolocation
+            isGeolocationSupported: !!navigator.geolocation,
+            embedMapUrl: ''
         };
         
         this.setPositionIntoState = this.setPositionIntoState.bind(this);
@@ -62,9 +64,18 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
     }
 
     setPositionIntoState(position: Position) {
+        const latitudeDiff = Math.abs(this.state.position.coords.latitude - position.coords.latitude);
+        const longitudeDiff = Math.abs(this.state.position.coords.longitude - position.coords.longitude);
+        
+        // Only update embedded map when position has significant changed
+        const embedMapUrl = (longitudeDiff >= 0.009 || latitudeDiff >= 0.009) 
+            ? `https://www.openstreetmap.org/export/embed.html?bbox=${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}%2C${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}&amp;layer=mapnik&amp;marker=${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}#map=16`
+            : this.state.embedMapUrl;
+
         this.setState({
             ...this.state,
-            position: position,
+            position,
+            embedMapUrl
         });
     }
 
@@ -88,12 +99,11 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
     }
 
     renderMap() {
-        const urlFrame = `https://www.openstreetmap.org/export/embed.html?bbox=${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}%2C${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}&amp;layer=mapnik&amp;marker=${this.state.position.coords.latitude}%2C${this.state.position.coords.longitude}`;
         const urlLink = `https://www.openstreetmap.org/?mlat=${this.state.position.coords.latitude}&amp;mlon=${this.state.position.coords.longitude}#map=18/${this.state.position.coords.latitude}/${this.state.position.coords.longitude}`;
 
         return(
             <Fragment>
-                <iframe title="map" width="100%" height="30%" frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0} src={urlFrame}></iframe><br/><small><a id="mapLink" href={urlLink}>Ver Mapa Ampliado</a></small>
+                <iframe title="map" width="100%" height="30%" frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0} src={this.state.embedMapUrl}></iframe><br/><small><a id="mapLink" href={urlLink}>Ver Mapa Ampliado</a></small>
             </Fragment>
         );
     }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import 'components/Camera/camera.css';
+import DeviceSelectionComponent from './camera-selection.component';
+import { Message } from 'components/Message/message.component';
 
 type CameraState = {
     mediaStream: MediaStream | null,
@@ -48,6 +50,22 @@ export default class CameraComponent extends Component<{}, CameraState> {
     }
 
     render() {
+
+        if (!this.state.isCameraSupported) {
+            return (<Message message='Your browser do not support geolocation api.' />)
+        }
+
+        if (this.state.mediaDevicesStatus !== 'granted'){
+            switch (this.state.mediaDevicesStatus) {
+                case 'denied':
+                    return (<Message message='You have denied access to your camera api.'/>);
+                case 'prompted':
+                    return (<Message message='Please allow us to access your camera api.'/>);
+                default:
+                    return (<Message message='Loading...'/>);
+            }
+        }
+        
         return (
             <div className="full-view-port">
                 <video
@@ -58,6 +76,7 @@ export default class CameraComponent extends Component<{}, CameraState> {
                     playsInline
                     muted
                 />
+                <DeviceSelectionComponent kind="camera" />
             </div>
         );
     }
