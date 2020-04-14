@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 type NavigationProps = {
     history: any
@@ -8,9 +8,9 @@ type NavigationProps = {
 export const NavigationBar = (props: NavigationProps) =>
     <div className="navbar">
         <nav>
-            <Link to="/" className={props.history.location.pathname === '/' ? "active" : ''}>Home</Link>
-            <Link to="/geolocation" className={props.history.location.pathname === '/geolocation' ? "active" : ''}>Geolocation</Link>
-            <Link to="/camera" className={props.history.location.pathname === '/camera' ? "active" : ''}>Camera</Link>
-            <Link to="not-found" className={props.history.location.pathname === '/404' ? "active" : ''}>404</Link>
+            <NavLink exact to="/" activeClassName="active">Home</NavLink>
+            <NavLink to="/geolocation" activeClassName="active">Geolocation</NavLink>
+            <NavLink to="/camera" activeClassName="active">Camera</NavLink>
+            <NavLink to="/not-found" activeClassName="active">404</NavLink>
         </nav>
     </div>
