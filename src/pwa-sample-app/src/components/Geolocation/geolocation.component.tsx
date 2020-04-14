@@ -74,15 +74,16 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
 
     renderPosition() {
         return (
-            <div>
-                <span className="strong">Accuracy:</span><span>{this.state.position.coords.accuracy}</span><br />
-                <span>Altitude:</span><span>{this.state.position.coords.altitude}</span><br />
-                <span>Alt accuracy:</span><span>{this.state.position.coords.altitudeAccuracy}</span><br />
-                <span>Heading:</span><span>{this.state.position.coords.heading}</span><br />
-                <span>Latitude:</span><span>{this.state.position.coords.latitude}</span><br />
-                <span>Longitude:</span><span>{this.state.position.coords.longitude}</span><br />
-                <span>Speed:</span><span>{this.state.position.coords.speed}</span><br />
-                <span>timestamp:</span><span>{this.state.position.timestamp}</span>
+            <div className="mapInfo">
+                <h2 className="mainTitle">Informations</h2>
+                <p className="title">Accuracy: <span>{this.state.position.coords.accuracy}</span></p>
+                <p className="title">Altitude: <span>{this.state.position.coords.altitude}</span></p>
+                <p className="title">Alt accuracy: <span>{this.state.position.coords.altitudeAccuracy}</span></p>
+                <p className="title">Heading: <span>{this.state.position.coords.heading}</span></p>
+                <p className="title">Latitude: <span>{this.state.position.coords.latitude}</span></p>
+                <p className="title">Longitude: <span>{this.state.position.coords.longitude}</span></p>
+                <p className="title">Speed: <span>{this.state.position.coords.speed}</span></p>
+                <p className="title">timestamp: <span>{this.state.position.timestamp}</span></p>
             </div>);
     }
 
@@ -92,7 +93,7 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
 
         return(
             <Fragment>
-                <iframe title="map" width="425" height="350" frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0} src={urlFrame} style={{border: '1px solid black'}}></iframe><br/><small><a href={urlLink}>Ver Mapa Ampliado</a></small>
+                <iframe title="map" width="100%" height="30%" frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0} src={urlFrame}></iframe><br/><small><a id="mapLink" href={urlLink}>Ver Mapa Ampliado</a></small>
             </Fragment>
         );
     }
