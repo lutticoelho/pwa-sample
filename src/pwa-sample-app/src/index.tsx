@@ -8,6 +8,7 @@ import './index.scss';
 import App from './App';
 import { Message } from 'components/Message/message.component';
 import { NavigationBar } from 'components/NavigationBar/navigation-bar.component';
+import OfflineWaring from 'components/OfflineWaning/offline-waring.component';
 
 // import GeolocationComponent from 'components/Geolocation/geolocation.component';
 // import CameraComponent from 'components/Camera/camera.component';
@@ -32,6 +33,7 @@ history.listen((location) => {
 
 ReactDOM.render(
   <React.StrictMode>
+    <OfflineWaring />
     <BrowserRouter>
       <Suspense fallback={<Message message="Loading..." />}>
         <Switch>
