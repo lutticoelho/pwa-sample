@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import * as Sentry from '@sentry/browser';
 import * as serviceWorker from './serviceWorker';
 
 import './index.scss';
@@ -10,9 +11,6 @@ import { Message } from 'components/Message/message.component';
 import { NavigationBar } from 'components/NavigationBar/navigation-bar.component';
 import OfflineWaring from 'components/OfflineWaning/offline-waring.component';
 
-// import GeolocationComponent from 'components/Geolocation/geolocation.component';
-// import CameraComponent from 'components/Camera/camera.component';
-
 const GeolocationComponent = lazy(() => import('components/Geolocation/geolocation.component'));
 const CameraComponent = lazy(() => import('components/Camera/camera.component'));
 
@@ -20,6 +18,7 @@ declare global {
   interface Window { ga: any; }
 }
 
+Sentry.init({dsn: process.env.REACT_APP_SENTRY_DSN, release: process.env.REACT_APP_VERSION });
 var history = createBrowserHistory();
 
 history.listen((location) => {
