@@ -27,7 +27,7 @@ steps:
   inputs:
     workingDirectory: 'src/pwa-sample-app/'
     script: |
-      set "REACT_APP_VERSION=$(buildRunNumber) && REACT_APP_SENTRY_DSN=$(REACT_APP_SENTRY_DSN)" && npm run-script build
+      set "REACT_APP_GA=$(REACT_APP_GA) && REACT_APP_VERSION=$(buildRunNumber) && REACT_APP_SENTRY_DSN=$(REACT_APP_SENTRY_DSN)" && npm run-script build
 
 # - task: ArchiveFiles@1
 #   displayName: 'Archive files '
