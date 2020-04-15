@@ -27,6 +27,7 @@ export default class TodoListComponent extends Component<{}, TodoListState> {
     }
 
     onChange(evt: React.FormEvent<HTMLInputElement>) {
+        evt.preventDefault();
         this.setState({
             inputTask: evt.currentTarget.value
         });
