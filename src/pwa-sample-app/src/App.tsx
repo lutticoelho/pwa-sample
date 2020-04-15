@@ -21,11 +21,11 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://bit.ly/pwa-samples-src"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Source code available
         </a>
       </header>
     </div>
