@@ -39,6 +39,8 @@ export default class OfflineWaring extends React.PureComponent<{}, OfflineState>
             return null;
         }
 
-        return (<div style={{backgroundColor: 'yellow', width: '100vw', position: 'fixed'}}>You are offline</div>);
+        return (<div style={{backgroundColor: 'yellow', width: '100vw', position: 'fixed', alignItems: 'center'}}>
+            <span className="material-icons">signal_wifi_off</span> You are offline
+          </div>);
     }
 }
