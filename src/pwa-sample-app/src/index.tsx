@@ -11,6 +11,7 @@ import { Message } from 'components/Message/message.component';
 import { NavigationBar } from 'components/NavigationBar/navigation-bar.component';
 import OfflineWaring from 'components/OfflineWaning/offline-waring.component';
 import AmbientLightSensorComponent from 'components/AmbientLightSensorComponent/ambient-light-sensor.component';
+import TodoListComponent from 'components/ToDoTask/todo-list.component';
 
 const GeolocationComponent = lazy(() => import('components/Geolocation/geolocation.component'));
 const CameraComponent = lazy(() => import('components/Camera/camera.component'));
@@ -42,6 +43,9 @@ ReactDOM.render(
           <Route exact path="/camera" component={CameraComponent} />
           <Route exact path="/lights">
             <AmbientLightSensorComponent />
+          </Route>
+          <Route exact patch="/localstorage">
+            <TodoListComponent />
           </Route>
           <Route exact path="/404" >
             <Message message="404 Not found" />

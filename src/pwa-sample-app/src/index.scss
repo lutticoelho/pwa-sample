@@ -125,3 +125,33 @@ canvas {
 .camera-controls {
   max-height: 10vh;
 }
+
+.todo-task {
+  width: 90vw;
+  min-height: 5vh;
+  max-height: 10vh;
+  background-color: #ffffff;
+  margin-top: 1vh;
+  padding: 1vh;
+  list-style-type: none;
+}
+
+.todo-task .done {
+  background-color: #008000;
+}
+
+.bottom-form {
+  bottom: 55px;
+  display: flex;
+  position: fixed;
+  margin-left: 25vw;
+}
+
+.bottom-form input {
+  width: 30vw;
+}
+
+.btn {
+  margin: 0 1vw;
+  min-width: 3vw;
+}
