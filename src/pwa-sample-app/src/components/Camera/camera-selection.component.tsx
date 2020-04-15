@@ -4,11 +4,14 @@ import { Message } from 'components/Message/message.component';
 type DeviceSelectionState = {
     devices: MediaDeviceInfo[],
     permissionStatus: string,
-    isCameraSupported: boolean
+    isCameraSupported: boolean,
+    selectedDevice: string
 }
 
 type DeviceSelectionProps = {
-    kind: string
+    kind: string,
+    onChangeDevice: Function,
+    selected: string
 }
 
 export default class DeviceSelectionComponent extends Component<DeviceSelectionProps, DeviceSelectionState> {
@@ -17,9 +20,10 @@ export default class DeviceSelectionComponent extends Component<DeviceSelectionP
         super(props);
 
         this.state = {
-            devices: [],
+            devices: [{deviceId: '', label: 'default', groupId: '', kind: props.kind} as MediaDeviceInfo],
             permissionStatus: '',
-            isCameraSupported: !!navigator.mediaDevices
+            isCameraSupported: !!navigator.mediaDevices,
+            selectedDevice: '',
         };
         this.getAvailableVideoDevices = this.getAvailableVideoDevices.bind(this);
     }
@@ -40,21 +44,34 @@ export default class DeviceSelectionComponent extends Component<DeviceSelectionP
     }
 
     onChangePermissionStatus(permissionStatus: PermissionStatus) {
+
+        if (this.state.permissionStatus === permissionStatus.state) {
+            return;
+        }
         this.setState({
             ...this.state,
             permissionStatus: permissionStatus.state
         });
     }
 
+    handleChange(evt: React.FormEvent<HTMLSelectElement>) {
+        this.setState({ selectedDevice: evt.currentTarget.value });
+    }
+
     getAvailableVideoDevices(mediaDevices: MediaDeviceInfo[]) {
         let devices: MediaDeviceInfo[] = [];
         mediaDevices.forEach(mediaDevice => {
-            if (mediaDevice.kind !== this.props.kind) {
+            if (mediaDevice.kind !== this.props.kind || this.state.devices.map(d => d.deviceId).includes(mediaDevice.deviceId)) {
                 return;
             }
             devices.push(mediaDevice);
         });
-        this.setState({ devices: devices });
+
+        if (devices.length === 0) {
+            return;
+        }
+
+        this.setState({ devices: [...this.state.devices, ...devices] });
     }
 
     render() {
@@ -66,7 +83,7 @@ export default class DeviceSelectionComponent extends Component<DeviceSelectionP
             case 'granted':
                 navigator.mediaDevices.enumerateDevices().then(this.getAvailableVideoDevices);
                 const options = !this.state?.devices ? null : this.state.devices.map(i => <option key={i.deviceId} value={i.deviceId}>{i.label}</option>);
-                return (<select id='mediaDevices'>{options}</select>);
+                return (<select id='mediaDevices' onChange={this.props.onChangeDevice.bind(this) || this.handleChange} value={this.state.selectedDevice || this.props.selected}>{options}</select>);
             case 'denied':
                 return (<span>You have denied access to your camera api.</span>);
             case 'prompted':

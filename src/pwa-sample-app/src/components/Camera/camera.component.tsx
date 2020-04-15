@@ -4,28 +4,32 @@ import DeviceSelectionComponent from './camera-selection.component';
 import { Message } from 'components/Message/message.component';
 
 type CameraState = {
-    mediaStream: MediaStream | null,
     mediaDevicesStatus: string,
-    isCameraSupported: boolean
+    isCameraSupported: boolean,
+    selectedCamera: string
 };
 
 export default class CameraComponent extends Component<{}, CameraState> {
 
     private videoRef: React.RefObject<HTMLVideoElement>;
+    private canvasRef: React.RefObject<HTMLCanvasElement>;
+    private currentStream?: MediaStream;
     private isStreamming: boolean = false;
 
     constructor(props: {}) {
         super(props);
         this.state = {
-            mediaStream: null,
             mediaDevicesStatus: '',
-            isCameraSupported: !!navigator.mediaDevices
+            isCameraSupported: !!navigator.mediaDevices,
+            selectedCamera: ''
         };
 
         this.videoRef = React.createRef();
+        this.canvasRef = React.createRef();
 
-        this.setMediaStreamIntoState = this.setMediaStreamIntoState.bind(this);
+        this.setMediaStream = this.setMediaStream.bind(this);
         this.handleCanPlay = this.handleCanPlay.bind(this);
+        this.onChangeCamera = this.onChangeCamera.bind(this);
     }
 
     componentDidMount() {
@@ -41,6 +45,13 @@ export default class CameraComponent extends Component<{}, CameraState> {
                 });
                 permissionStatus.onchange = () => this.onChangePermissionStatus(permissionStatus);
             });
+        this.startStreamming();            
+    }
+
+    componentWillUnmount() {
+        if (typeof this.currentStream !== 'undefined') {
+            this.stopStreamming();
+        }
     }
 
     onChangePermissionStatus(permissionStatus: PermissionStatus) {
@@ -49,30 +60,81 @@ export default class CameraComponent extends Component<{}, CameraState> {
             mediaDevicesStatus: permissionStatus.state
         });
 
-        this.startStreasmming();
+        if (this.isStreamming) {
+            return;
+        }
+        this.startStreamming();
     }
 
-    setMediaStreamIntoState(stream: MediaStream) {
-        if (stream && this.videoRef.current && !this.videoRef.current.srcObject) {
+    setMediaStream(stream: MediaStream) {
+        if (stream && this.videoRef.current) {
             this.videoRef.current.srcObject = stream;
+            this.currentStream = stream;
+        }
+    }
+
+    startStreamming(constraints?: MediaStreamConstraints | undefined) {
+        if (!constraints) {
+            constraints = { video: true };
         }
 
-        this.setState({
-            ...this.state,
-            mediaStream: stream
-        });
-    }
-
-    startStreasmming() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             // Without `{ audio: true }` since we only want video now
-            navigator.mediaDevices.getUserMedia({ video: true }).then(this.setMediaStreamIntoState);
+            navigator.mediaDevices.getUserMedia(constraints).then(this.setMediaStream).catch((error) => console.warn(JSON.stringify(error)));
             this.isStreamming = true;
         }
     }
 
+    stopStreamming() {
+        this.currentStream?.getTracks().forEach(track => {
+            track.stop();
+        });
+
+        this.currentStream = undefined;
+        this.isStreamming = false;
+    }
+
+    onChangeCamera(evt: React.FormEvent<HTMLSelectElement>) {
+        if (typeof this.currentStream !== 'undefined') {
+            this.stopStreamming();
+        }
+
+        const value = evt.currentTarget.value;
+        const videoConstraints = {} as MediaTrackConstraints;
+
+        if (value === '') {
+            videoConstraints.facingMode = 'environment';
+        } else {
+            videoConstraints.deviceId = { exact: value };
+        }
+
+        const constraints = {
+            video: videoConstraints
+        } as MediaStreamConstraints;
+
+        this.startStreamming(constraints);
+
+        this.setState({
+            ...this.state,
+            selectedCamera: value
+        });
+    }
+
     handleCanPlay() {
         this.videoRef.current?.play();
+    }
+
+    onClickButton(evt: React.FormEvent<HTMLButtonElement>) {
+        if (!this.canvasRef.current) {
+            return;
+        }
+
+        const context = this.canvasRef.current.getContext("2d");
+        if (!context) {
+            return;
+        }
+
+        context.drawImage(this.videoRef.current as CanvasImageSource, 0, 0);
     }
 
     render() {
@@ -92,21 +154,24 @@ export default class CameraComponent extends Component<{}, CameraState> {
             }
         }
 
-        if(!this.isStreamming) {
-            this.startStreasmming();
-        }
-
         return (
             <div className="full-view-port">
-                <video
-                    ref={this.videoRef}
-                    onCanPlay={this.handleCanPlay}
-                    style={{ top: 0, left: 0, width: '100vw' }}
-                    autoPlay
-                    playsInline
-                    muted
-                />
-                <DeviceSelectionComponent kind="camera" />
+                <div className="">
+                    <video
+                        ref={this.videoRef}
+                        onCanPlay={this.handleCanPlay}
+                        autoPlay
+                        playsInline
+                        muted
+                    />
+                </div>
+                <div className="camera-controls">
+                    <DeviceSelectionComponent kind="videoinput" onChangeDevice={this.onChangeCamera} selected={this.state.selectedCamera} />
+                    <button onClick={this.onClickButton.bind(this)}>snap photo</button>
+                </div>
+                <div className="">
+                <canvas id="canvas" ref={this.canvasRef} width="640" height="480"></canvas>
+                </div>
             </div>
         );
     }

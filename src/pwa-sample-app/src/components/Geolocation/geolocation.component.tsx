@@ -19,14 +19,14 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
             isGeolocationSupported: !!navigator.geolocation,
             embedMapUrl: ''
         };
-        
+
         this.setPositionIntoState = this.setPositionIntoState.bind(this);
     }
 
     // After the component did mount, we set the state each second.
     componentDidMount() {
-        navigator.permissions.query({name:'geolocation'})
-            .then(function(permissionStatus) {
+        navigator.permissions.query({ name: 'geolocation' })
+            .then(function (permissionStatus) {
                 console.log('geolocation permission state is ', permissionStatus.state);
                 return permissionStatus;
             })
@@ -66,10 +66,10 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
     setPositionIntoState(position: Position) {
         const latitudeDiff = Math.abs(this.state.position.coords.latitude - position.coords.latitude);
         const longitudeDiff = Math.abs(this.state.position.coords.longitude - position.coords.longitude);
-        
+
         // Only update embedded map when position has significant changed
-        const embedMapUrl = (longitudeDiff >= 0.009 || latitudeDiff >= 0.009) 
-            ? `https://www.openstreetmap.org/export/embed.html?bbox=${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}%2C${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}&amp;layer=mapnik&amp;marker=${this.state.position.coords.longitude}%2C${this.state.position.coords.latitude}#map=16`
+        const embedMapUrl = (longitudeDiff >= 0.009 || latitudeDiff >= 0.009)
+            ? `https://www.openstreetmap.org/export/embed.html?bbox=${position.coords.longitude + 0.002},${position.coords.latitude + 0.001},${position.coords.longitude - 0.002},${position.coords.latitude - 0.001}&layer=mapnik&marker=${position.coords.latitude}%2C${position.coords.longitude}&amp;map=16`
             : this.state.embedMapUrl;
 
         this.setState({
@@ -99,11 +99,9 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
     }
 
     renderMap() {
-        const urlLink = `https://www.openstreetmap.org/?mlat=${this.state.position.coords.latitude}&amp;mlon=${this.state.position.coords.longitude}#map=18/${this.state.position.coords.latitude}/${this.state.position.coords.longitude}`;
-
-        return(
+        return (
             <Fragment>
-                <iframe title="map" width="100%" height="30%" frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0} src={this.state.embedMapUrl}></iframe><br/><small><a id="mapLink" href={urlLink}>Ver Mapa Ampliado</a></small>
+                <iframe title="map" width="100%" height="30%" frameBorder="0" scrolling="no" marginHeight={0} marginWidth={0} src={this.state.embedMapUrl}></iframe>
             </Fragment>
         );
     }
@@ -115,7 +113,15 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
 
         switch (this.state.geolocationStatus) {
             case 'granted':
-                return (<div><div>{this.renderMap()}</div><div>{this.renderPosition()}</div></div>);
+                return (<div>
+                    <div>
+                        {this.renderMap()}
+                        <br /><small><a id="mapLink" href={`https://www.openstreetmap.org/?mlat=${this.state.position.coords.latitude}&amp;mlon=${this.state.position.coords.longitude}#map=16/${this.state.position.coords.latitude}/${this.state.position.coords.longitude}`}>Ver Mapa Ampliado</a></small>
+                    </div>
+                    <div>
+                        {this.renderPosition()}
+                    </div>
+                </div>);
             case 'denied':
                 return this.renderMessage('You have denied access to your geolocation api.');
             case 'prompted':
