@@ -41,7 +41,7 @@ export default class TextToSpeechComponent extends Component<{}, MessageProps> {
 
         return (
             <div className="center-content">
-                <input type="text" value={this.state.message} style={{position: "absolute", top: '40vh'}} onChange={this.onChangeInput.bind(this)} />
+                <input type="text" value={this.state.message} style={{position: "absolute", top: '30vh'}} onChange={this.onChangeInput.bind(this)} />
                 <div className="button" onClick={() => this.readOutLoud(this.state.message)}>
                     <p>Say it</p>
                 </div>

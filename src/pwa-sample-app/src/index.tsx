@@ -15,6 +15,7 @@ import TodoListComponent from 'components/ToDoTask/todo-list.component';
 import VibrateComponent from 'components/Vibrate/vibrate.component';
 import TextToSpeechComponent from 'components/TextToSpeech/text-to-speech.component';
 import MicrophoneComponent from 'components/Microphone/microphone.component';
+import SpeechRecognitionComponent from 'components/SpeechRecognition/speech-recognition.component';
 
 const GeolocationComponent = lazy(() => import('components/Geolocation/geolocation.component'));
 const CameraComponent = lazy(() => import('components/Camera/camera.component'));
@@ -46,6 +47,7 @@ ReactDOM.render(
           <Route exact path="/camera" component={CameraComponent} />
           <Route exact path="/text-to-speech" component={TextToSpeechComponent} />
           <Route exact path="/microphone" component={MicrophoneComponent} />
+          <Route exact path="/speech-recognition" component={SpeechRecognitionComponent} />
           <Route exact path="/vibrate">
             <VibrateComponent />
           </Route>
@@ -72,4 +74,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.register();
+serviceWorker.unregister();
