@@ -147,7 +147,7 @@ export default class CameraComponent extends Component<{}, CameraState> {
             switch (this.state.mediaDevicesStatus) {
                 case 'denied':
                     return (<Message message='You have denied access to your camera api.' />);
-                case 'prompted':
+                case 'prompt':
                     return (<Message message='Please allow us to access your camera api.' />);
                 default:
                     return (<Message message='Loading...' />);

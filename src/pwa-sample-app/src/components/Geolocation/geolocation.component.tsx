@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Message } from 'components/Message/message.component';
 
 type GeolocationState = {
     position: Position,
@@ -109,26 +110,28 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
 
     render() {
         if (!this.state.isGeolocationSupported) {
-            return this.renderMessage('Your browser do not support geolocation api.')
+            return (<Message message='Your browser do not support geolocation api.' />)
         }
 
-        switch (this.state.geolocationStatus) {
-            case 'granted':
-                return (<div>
-                    <div>
-                        {this.renderMap()}
-                        <br /><small><a id="mapLink" href={`https://www.openstreetmap.org/?mlat=${this.state.position.coords.latitude}&amp;mlon=${this.state.position.coords.longitude}#map=16/${this.state.position.coords.latitude}/${this.state.position.coords.longitude}`}>Ver Mapa Ampliado</a></small>
-                    </div>
-                    <div>
-                        {this.renderPosition()}
-                    </div>
-                </div>);
-            case 'denied':
-                return this.renderMessage('You have denied access to your geolocation api.');
-            case 'prompted':
-                return this.renderMessage('Please allow us to access your browser geolocation api.');
-            default:
-                return this.renderMessage('An error occur with geolocation api.');
+        if (this.state.geolocationStatus !== 'granted') {
+            switch (this.state.geolocationStatus) {
+                case 'denied':
+                    return (<Message message='You have denied access to your geolocation api.' />);
+                case 'prompt':
+                    return (<Message message='Please allow us to access your geolocation api.' />);
+                default:
+                    return (<Message message='Loading...' />);
+            }
         }
+
+        return (<div>
+            <div>
+                {this.renderMap()}
+                <br /><small><a id="mapLink" href={`https://www.openstreetmap.org/?mlat=${this.state.position.coords.latitude}&amp;mlon=${this.state.position.coords.longitude}#map=16/${this.state.position.coords.latitude}/${this.state.position.coords.longitude}`}>Ver Mapa Ampliado</a></small>
+            </div>
+            <div>
+                {this.renderPosition()}
+            </div>
+        </div>);
     }
 }

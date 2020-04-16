@@ -88,7 +88,7 @@ export default class AmbientLightSensorComponent extends Component<{}, AmbientLi
             switch (this.state.permissionStatus) {
                 case 'denied':
                     return (<Message message='You have denied access to your AmbientLightSensor api.' />);
-                case 'prompted':
+                case 'prompt':
                     return (<Message message='Please allow us to access your AmbientLightSensor api.' />);
                 default:
                     return (<Message message='Loading...' />);

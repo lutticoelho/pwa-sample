@@ -126,6 +126,10 @@ canvas {
   max-height: 10vh;
 }
 
+#mediaDevices {
+  max-width: 40vw;;
+}
+
 .todo-task {
   width: 90vw;
   min-height: 5vh;
@@ -143,11 +147,11 @@ canvas {
 .audio-track-list {
   display: flex;
   flex-direction: column;
+  padding: 0;
 }
 
 li audio {
-  padding-left: 10vh;
-  width: 40vw;
+  width: 100%;
 }
 
 .audio-track {
@@ -164,7 +168,6 @@ li audio {
   bottom: 55px;
   display: flex;
   position: fixed;
-  margin-left: 25vw;
 }
 
 .bottom-form input {

@@ -48,6 +48,7 @@ export default class MicrophoneComponent extends Component<{}, MicrophoneState> 
                 });
                 permissionStatus.onchange = () => this.onChangePermissionStatus(permissionStatus);
             });
+        this.startStreamming();
     }
 
     componentWillUnmount() {
@@ -170,7 +171,6 @@ export default class MicrophoneComponent extends Component<{}, MicrophoneState> 
 
         const audioTracks = this.state.recordedAudios.map((track, index) =>
             <li key={index} className="audio-track">
-                Recording {index + 1}
                 <audio controls src={track}></audio>
             </li>);
 
@@ -187,7 +187,7 @@ export default class MicrophoneComponent extends Component<{}, MicrophoneState> 
             switch (this.state.mediaDevicesStatus) {
                 case 'denied':
                     return (<Message message='You have denied access to your microphone api.' />);
-                case 'prompted':
+                case 'prompt':
                     return (<Message message='Please allow us to access your microphone api.' />);
                 default:
                     return (<Message message='Loading...' />);
