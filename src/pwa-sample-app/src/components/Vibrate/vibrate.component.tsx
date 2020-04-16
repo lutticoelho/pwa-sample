@@ -18,14 +18,6 @@ export default class VibrateComponent extends Component<{}, {}> {
                 <div className="button" onClick={this.randomVibrate.bind(this)}>
                     <p>Click me</p>
                 </div>
-                {/* {this.renderTasks()}
-                <div className="bottom-form">
-                    <form onSubmit={this.onAddTask.bind(this)}>
-                        <input value={this.state.inputVibration} onChange={this.onChange.bind(this)} autoFocus />
-                    </form>
-                    <button className="btn" onClick={this.onAddTask.bind(this)}><Icon name='add_circle_outline' /></button>
-                    <button className="btn" onClick={this.onClearList.bind(this)}><Icon name='clear' /></button>
-                </div> */}
             </div>
         );
     }

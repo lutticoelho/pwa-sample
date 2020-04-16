@@ -95,6 +95,7 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
                 <p className="title">Longitude: <span>{this.state.position.coords.longitude}</span></p>
                 <p className="title">Speed: <span>{this.state.position.coords.speed}</span></p>
                 <p className="title">timestamp: <span>{this.state.position.timestamp}</span></p>
+                <p className="title">Date: <span>{() => { try {new Date(this.state.position.timestamp)} catch(e){console.warn(`Not date ${this.state.position.timestamp}`)}}}</span></p>
             </div>);
     }
 

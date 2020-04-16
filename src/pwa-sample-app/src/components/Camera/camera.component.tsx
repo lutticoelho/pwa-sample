@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'components/Camera/camera.css';
-import DeviceSelectionComponent from './camera-selection.component';
+import DeviceSelectionComponent from './device-selection.component';
 import { Message } from 'components/Message/message.component';
 
 type CameraState = {

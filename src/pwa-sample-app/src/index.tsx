@@ -13,6 +13,8 @@ import OfflineWaring from 'components/OfflineWaning/offline-waring.component';
 import AmbientLightSensorComponent from 'components/AmbientLightSensorComponent/ambient-light-sensor.component';
 import TodoListComponent from 'components/ToDoTask/todo-list.component';
 import VibrateComponent from 'components/Vibrate/vibrate.component';
+import TextToSpeechComponent from 'components/TextToSpeech/text-to-speech.component';
+import MicrophoneComponent from 'components/Microphone/microphone.component';
 
 const GeolocationComponent = lazy(() => import('components/Geolocation/geolocation.component'));
 const CameraComponent = lazy(() => import('components/Camera/camera.component'));
@@ -42,6 +44,8 @@ ReactDOM.render(
           <Route exact path="/" component={App} />
           <Route exact path="/geolocation" component={GeolocationComponent} />
           <Route exact path="/camera" component={CameraComponent} />
+          <Route exact path="/text-to-speech" component={TextToSpeechComponent} />
+          <Route exact path="/microphone" component={MicrophoneComponent} />
           <Route exact path="/vibrate">
             <VibrateComponent />
           </Route>

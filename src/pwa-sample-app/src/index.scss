@@ -140,6 +140,26 @@ canvas {
   background-color: #008000;
 }
 
+.audio-track-list {
+  display: flex;
+  flex-direction: column;
+}
+
+li audio {
+  padding-left: 10vh;
+  width: 40vw;
+}
+
+.audio-track {
+  width: 90vw;
+  min-height: 5vh;
+  max-height: 10vh;
+  margin-top: 1vh;
+  padding: 1vh;
+  list-style-type: none;
+  text-align: -webkit-center;
+}
+
 .bottom-form {
   bottom: 55px;
   display: flex;
@@ -154,6 +174,12 @@ canvas {
 .btn {
   margin: 0 1vw;
   min-width: 3vw;
+}
+
+div.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button {

@@ -13,7 +13,8 @@ export const NavigationBar = (props: NavigationProps) =>
             <NavLink exact to="/" activeClassName="active"><Icon name="flag"/></NavLink>
             <NavLink to="/geolocation" activeClassName="active"><Icon name="place" /></NavLink>
             <NavLink to="/camera" activeClassName="active"><Icon name="camera_alt" /></NavLink>
-            <NavLink to="/notfound" activeClassName="active"><Icon name="mic" /></NavLink>
+            <NavLink to="/microphone" activeClassName="active"><Icon name="mic" /></NavLink>
+            <NavLink to="/text-to-speech" activeClassName="active"><Icon name="record_voice_over" /></NavLink>
             <NavLink to="/vibrate" activeClassName="active"><Icon name="vibration" /></NavLink>
             <NavLink to="/localstorage" activeClassName="active"><Icon name="storage" /></NavLink>
             <NavLink to="/lights" activeClassName="active"><Icon name="wb_sunny" /></NavLink>
