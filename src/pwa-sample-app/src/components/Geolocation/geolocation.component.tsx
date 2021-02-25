@@ -127,7 +127,7 @@ export default class GeolocationComponent extends Component<{}, GeolocationState
         return (<div>
             <div>
                 {this.renderMap()}
-                <br /><small><a id="mapLink" href={`https://www.openstreetmap.org/?mlat=${this.state.position.coords.latitude}&amp;mlon=${this.state.position.coords.longitude}#map=16/${this.state.position.coords.latitude}/${this.state.position.coords.longitude}`}>Ver Mapa Ampliado</a></small>
+                <br /><small><a id="mapLink" href={`https://www.openstreetmap.org/?mlat=${this.state.position.coords.latitude}&amp;mlon=${this.state.position.coords.longitude}#map=16/${this.state.position.coords.latitude}/${this.state.position.coords.longitude}`}>View Larger Map</a></small>
             </div>
             <div>
                 {this.renderPosition()}
