@@ -81,5 +81,6 @@
     ],
     "orientation": "portrait",
     "scope": "/",
-    "description": "Sample open-source application that shows how to access device features using a Progressive Web App instead a native app.  Feel free to add new features on https://github.com/lutticoelho/pwa-sample"
+    "description": "Sample open-source application that shows how to access device features using a Progressive Web App instead a native app.  Feel free to add new features on https://github.com/lutticoelho/pwa-sample",
+    "categories": ["software development", "education", "poc"]
 }
