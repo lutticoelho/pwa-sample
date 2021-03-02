@@ -1,10 +1,5 @@
 [{
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "com.example.pocpwa",
-      "sha256_cert_fingerprints": [
-        "8D:39:8D:EA:03:F2:52:86:F7:A8:05:56:03:50:51:19:84:53:E2:AF:3A:BC:7A:D7:E9:4A:89:9E:82:12:94:7B"
-      ]
-    }
-}]
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "dev.mypoc.pwa.twa",
+                   "sha256_cert_fingerprints": ["F6:96:C7:82:5A:84:F0:DE:08:37:3D:B6:8C:D6:57:38:73:74:4E:E2:6E:0E:13:DD:1F:EA:19:5F:D3:10:E6:BD"] }
+    }]
